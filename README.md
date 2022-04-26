@@ -101,3 +101,11 @@ Ainsi, l’association des deux protocoles TCP et IP permettent d’acheminer le
 
 *Note: Lorsque l’on souhaite privilégier la rapidité par rapport à la sécurité de transmission, il est possible d’utiliser le protocole UDP, orienté sans connexion, plutôt que TCP.*
 
+## Notes
+* TCP est fiable. En effet, le protocole garantit la transmission de toutes les données dans leur intégralité, ainsi que la possibilité, pour le destinataire, de les remettre dans le bon ordre.
+* TCP permet de multiplexer les données, c'est-à-dire de faire circuler simultanément des informations provenant de sources (applications par exemple) distinctes sur une même ligne
+* TCP permet de formater les données en segments de longueur variable afin de les "remettre" au protocole IP
+* TCP prévoit l’envoi des données par segments individuels d’un volume maximum de 1 500 octets (en-tête compris).
+* TCP se base, dans la plupart des cas, sur le protocole Internet (IP). C’est pourquoi, on parle souvent de la pile de protocoles TCP/IP.
+* Le volume par défaut de l’en-tête TCP est de 20 octets. Des options supplémentaires pouvant atteindre jusqu’à 40 octets peuvent lui être rajoutées.
+
