@@ -1,8 +1,11 @@
 # protocole-tcp
 
 ### Qu'est-ce que le protocole TCP?
-Le protocole TCP (Transmission Control Protocol) est un des principaux acteurs de la couche TRANSPORT du modèle TCP/IP. Il permet au niveau des applications, de gérer les données en provenance ou à destination de la couche inférieure (c’est-à-dire du protocole IP).
-
+```
+Le protocole TCP (Transmission Control Protocol) est un des principaux acteurs de la couche TRANSPORT du modèle TCP/IP.
+Il permet au niveau des applications, de gérer les données en provenance ou à destination de la couche inférieure
+(c’est-à-dire du protocole IP).
+```
 Le protocole TCP a pour tâche de :
 
 - Remettre en ordre les datagrammes en provenance du protocole IP.
@@ -10,44 +13,65 @@ Le protocole TCP a pour tâche de :
 - Formater les données en segments de longueur variable pour les remettre au protocole IP.
 - Initialiser et terminer une communication.
 
-Ainsi, le protocole TCP assure le transfert des données de façon fiable, bien qu’il s’appuie sur le protocole de niveau inférieur : IP, qui lui n’intègre aucun contrôle de livraison de datagramme.
-
-En fait, TCP possède un système d’accusé de réception permettant au client et au serveur de s’assurer de la bonne réception mutuelle des données (un peu comme on le fait pour la réception d’un colis postal). Lors de l’émission d’un segment, un numéro d’ordre (aussi appelé numéro de séquence), lui est associé. De même, à réception d’un segment de données, la machine réceptrice retourne un segment d’information dont le drapeau (aussi appelé flag) est positionné à 1. Cela signifie qu’il s’agit d’un accusé de réception. Ce flag est accompagné d’un numéro d’accusé de réception prenant alors la valeur du numéro d’ordre précédent :
+## Principe de fonctionnement
+* Lors de l’émission d’un segment, un numéro de séquence lui est associé.
+* De même, à réception d’un segment de données, la machine réceptrice retourne un segment d’information dont le flag est positionné à 1. Cela signifie qu’il s’agit d’un accusé de réception.
+* Ce flag est accompagné d’un numéro d’accusé de réception (ACK) prenant alors la valeur du numéro d’ordre précédent :
 
 ![image](https://user-images.githubusercontent.com/83721477/165297381-c677ef86-a9d7-49bf-aaca-b5f3901c026b.png)
-Après quoi, grâce à une minuterie déclenchée dès la réception d’un segment, au niveau de l’émetteur, le segment est réexpédié dès lors que le délai imparti est écoulé. En effet, dans ce cas, le protocole considère que le segment est perdu :
+
+Après quoi, grâce à une minuterie déclenchée dès la réception d’un segment, au niveau de l’émetteur, le segment est réexpédié dès lors que le délai imparti est écoulé.<br> En effet, dans ce cas, le protocole considère que le segment est perdu
+#### Exemple:
 ![image](https://user-images.githubusercontent.com/83721477/165297403-65212acd-5262-4c7c-a06c-49b9b35caacf.png)
 
-REMARQUE : mais, si le segment n’était pas perdu et qu’il arrive malgré tout à destination, le récepteur saura, grâce au numéro d’ordre qu’il s’agit d’un doublon et ne conservera alors que le dernier segment arrivé à destination.
+*Note: si le segment n’était pas perdu et qu’il arrive malgré tout à destination, le récepteur saura, grâce au numéro d’ordre qu’il s’agit d’un doublon et ne conservera alors que le dernier segment arrivé à destination.*
 
-IMPORTANT : étant donné que le processus de communication se fait via une émission de données et d’un accusé de réception, basé sur ce fameux numéro de séquence, il est nécessaire que les machines émettrice et réceptrice (c’est-à-dire, respectivement le client et le serveur), connaissent le numéro d’ordre initial de la transmission effectuée par l’autre machine.
+```
+Etant donné que le processus de communication se fait via une émission de données et d’un accusé de réception,
+basé sur ce fameux numéro de séquence, il est nécessaire que les machines émettrice et réceptrice
+(c’est-à-dire, respectivement le client et le serveur), connaissent le numéro d’ordre initial de
+la transmission effectuée par l’autre machine.
+```
 
 Il est donc convenu que l’établissement d’une connexion entre deux applications s’effectue de la manière suivante :
 
-- Les ports de service doivent être ouverts.
-- L’application du serveur est à l’écoute (en mode passif), en attente d’une connexion entrante.
-- L’application sur le client émet une requête de connexion vers le serveur. L’application du client est alors dite en ouverture active.
+* Les ports de service doivent être ouverts.
+* L’application du serveur est à l’écoute (en mode passif), en attente d’une connexion entrante.
+* L’application sur le client émet une requête de connexion vers le serveur.
+* L’application du client est alors dite en ouverture active.
 
-Donc, les deux machines en communication doivent synchroniser leurs séquences. Cela se fait par le mécanisme appelé "three way handshake" (traduit en poignée de main à trois temps – c’est le protocole que l’on a communément, nous humain, l’habitude d’utiliser pour se dire "bonjour").
+#### Donc, les deux machines en communication doivent synchroniser leurs séquences.<br>Cela se fait par le mécanisme appelé `Three Way Handshake` (traduit en poignée de main à trois temps).
 
-NOTE : ce mode "three way handshake" est également utilisé lors de la clôture de session.
+*Note: Le Three Way Handshake est également utilisé lors de la clôture de session.*
 
+### Three Way Handshake
 Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 
-SYN : Le client qui désire établir une connexion avec un serveur va envoyer un premier paquet SYN (synchronized) au serveur. Le numéro de séquence de ce paquet est un nombre aléatoire A.
-SYN-ACK : Le serveur va répondre au client à l'aide d'un paquet SYN-ACK (synchronize, acknowledge). Le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN) incrémenté de un (A + 1) tandis que le numéro de séquence du paquet SYN-ACK est un nombre aléatoire B.
-ACK : Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception. Le numéro d'acquittement de ce paquet est défini selon le numéro de séquence reçu précédemment (par exemple : A + 1) et le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN-ACK) incrémenté de un (B + 1).
-Une fois le three-way handshake effectué, le client et le serveur ont reçu un acquittement de la connexion. Les étapes 1 et 2 définissent le numéro de séquence pour la communication du client au serveur et les étapes 2 et 3 définissent le numéro de séquence pour la communication dans l'autre sens. Une communication full-duplex est maintenant établie entre le client et le serveur.
+1. `SYN`: Le client qui désire établir une connexion avec un serveur va envoyer un premier paquet SYN (synchronized) au serveur. Le numéro de séquence de ce paquet est un nombre aléatoire A.<br>
+2. `SYN-ACK`: Le serveur va répondre au client à l'aide d'un paquet SYN-ACK (synchronize, acknowledge).<br>Le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN) incrémenté de un (A + 1) tandis que le numéro de séquence du paquet SYN-ACK est un nombre aléatoire B.<br>
+3. `ACK`: Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception.<br>Le numéro d'acquittement de ce paquet est défini selon le numéro de séquence reçu précédemment (par exemple : A + 1) et le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN-ACK) incrémenté de un (B + 1).
+
+Une fois le three-way handshake effectué, le client et le serveur ont reçu un acquittement de la connexion.<br>Les étapes 1 et 2 définissent le numéro de séquence pour la communication du client au serveur et les étapes 2 et 3 définissent le numéro de séquence pour la communication dans l'autre sens.<br>Une communication full-duplex est maintenant établie entre le client et le serveur.
 
 ![image](https://user-images.githubusercontent.com/83721477/165297474-a9749eaf-cb3a-4f1d-a791-8d0166019c9b.png)
 
-À la suite de ce premier échange, entre deux machines, comportant trois séquences, les deux protagonistes sont alors synchronisés et la communication effective peut commencer. Des petits malins ont alors trouvé un moyen de détourner ce mécanisme et en ont fait un outil de piratage appelé IP Spoofing. En fait, cela permet de corrompre la relation d’approbation établie, à des fins malicieuses.
+### Limites
+```
+À la suite de ce premier échange, entre deux machines, comportant trois séquences, les deux protagonistes
+sont alors synchronisés et la communication effective peut commencer. Des petits malins ont alors trouvé un
+moyen de détourner ce mécanisme et en ont fait un outil de piratage appelé IP Spoofing. En fait, cela permet
+de corrompre la relation d’approbation établie, à des fins malicieuses.
+```
 
-Afin d’empêcher ce détournement, on peut limiter le nombre d’accusés de réception pour désengorger le trafic réseau, en fixant le nombre de séquence, au bout duquel un accusé de réception est nécessaire. Cette valeur est stockée dans le champ "fenêtre" de l’entête TCP/IP.
+### Solution
+Afin d’empêcher ce détournement, on peut limiter le nombre d’accusés de réception pour désengorger le trafic réseau, en fixant le nombre de séquence, au bout duquel un accusé de réception est nécessaire.<br>
 
-Ce système, appelé "méthode de la fenêtre glissante", définit une fourchette de séquences n’ayant nul besoin d’un accusé de réception et se déplace au fur et à mesure que les accusés de réception sont détectés.
+Cette valeur est stockée dans le champ `window size` de l’entête TCP/IP.
 
-Exemple : après une ouverture de communication, le n° de séquence est 3 et autorise jusqu’à la séquence 5 :
+Ce système, appelé "sliding window method", définit une fourchette de séquences n’ayant nul besoin d’un accusé de réception et se déplace au fur et à mesure que les accusés de réception sont détectés.
+
+#### Exemple: 
+Après une ouverture de communication, le n° de séquence est 3 et autorise jusqu’à la séquence 5 :
 
 ![image](https://user-images.githubusercontent.com/83721477/165297560-362962ab-ec06-459b-806a-96544008af9e.png)
 IMPORTANT : la taille de cette fenêtre glissante n’est pas fixe. Ainsi, le serveur peut inclure (toujours dans le champ "fenêtre", la taille de la fenêtre qui lui semble la plus adaptée. De la sorte, en cas d’accusé de réception indiquant une demande d’augmentation de la taille de la fenêtre, le client peut déplacer celle-ci vers la droite. Mais, en cas de réduction, le client attend que la fenêtre se déplace d’elle-même.
