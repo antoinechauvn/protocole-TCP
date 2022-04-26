@@ -45,13 +45,14 @@ la transmission effectuée par l’autre machine.
 ## Three Way Handshake
 Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 
-1. `SYN`: Le client qui désire établir une connexion avec un serveur va envoyer un premier paquet SYN (synchronized) au serveur. Le numéro de séquence de ce paquet est un nombre aléatoire A.<br>
-2. `SYN-ACK`: Le serveur va répondre au client à l'aide d'un paquet SYN-ACK (synchronize, acknowledge).<br>Le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN) incrémenté de un (A + 1) tandis que le numéro de séquence du paquet SYN-ACK est un nombre aléatoire B.<br>
-3. `ACK`: Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception.<br>Le numéro d'acquittement de ce paquet est défini selon le numéro de séquence reçu précédemment (par exemple : A + 1) et le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN-ACK) incrémenté de un (B + 1).
+1. `SYN`: Le client qui désire établir une connexion avec un serveur va envoyer un premier paquet SYN (synchronized) au serveur. Le numéro de séquence de ce paquet est un nombre aléatoire X.<br>
+2. `SYN-ACK`: Le serveur va répondre au client à l'aide d'un paquet SYN-ACK (synchronize, acknowledge).<br>Le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN) incrémenté de un (X + 1) tandis que le numéro de séquence du paquet SYN-ACK est un nombre aléatoire Y.<br>
+3. `ACK`: Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception.<br>Le numéro d'acquittement de ce paquet est défini selon le numéro de séquence reçu précédemment (par exemple : X + 1) et le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN-ACK) incrémenté de un (Y + 1).
 
-Une fois le three-way handshake effectué, le client et le serveur ont reçu un acquittement de la connexion.<br>Les étapes 1 et 2 définissent le numéro de séquence pour la communication du client au serveur et les étapes 2 et 3 définissent le numéro de séquence pour la communication dans l'autre sens.<br>Une communication full-duplex est maintenant établie entre le client et le serveur.
+Une fois le three-way handshake effectué, le client et le serveur ont reçu un acquittement de la connexion.<br>Les étapes 1 et 2 définissent le numéro de séquence pour la communication du client au serveur et les étapes 2 et 3 définissent le numéro de séquence pour la communication dans l'autre sens.<br><br>
+**Une communication `full-duplex` est maintenant établie entre le client et le serveur.**
 
-![image](https://user-images.githubusercontent.com/83721477/165297474-a9749eaf-cb3a-4f1d-a791-8d0166019c9b.png)
+![image](https://user-images.githubusercontent.com/83721477/165389106-fcebe854-aa1c-4330-b206-bd4797f677e8.png)
 
 
 
