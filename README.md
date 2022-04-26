@@ -44,7 +44,7 @@ Il est donc convenu que l’établissement d’une connexion entre deux applicat
 
 *Note: Le Three Way Handshake est également utilisé lors de la clôture de session.*
 
-### Three Way Handshake
+## Three Way Handshake
 Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 
 1. `SYN`: Le client qui désire établir une connexion avec un serveur va envoyer un premier paquet SYN (synchronized) au serveur. Le numéro de séquence de ce paquet est un nombre aléatoire A.<br>
