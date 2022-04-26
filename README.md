@@ -80,7 +80,7 @@ Afin d’empêcher ce détournement, on peut limiter le nombre d’accusés de r
 
 Cette valeur est stockée dans le champ `window size` de l’entête TCP/IP.
 
-Ce système, appelé "sliding window method", définit une fourchette de séquences n’ayant nul besoin d’un accusé de réception et se déplace au fur et à mesure que les accusés de réception sont détectés.
+Ce système, appelé `sliding window method`, définit une fourchette de séquences n’ayant nul besoin d’un accusé de réception et se déplace au fur et à mesure que les accusés de réception sont détectés.
 
 #### Exemple: 
 Après une ouverture de communication, le n° de séquence est 3 et autorise jusqu’à la séquence 5 :
