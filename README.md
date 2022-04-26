@@ -74,7 +74,10 @@ Ce système, appelé "sliding window method", définit une fourchette de séquen
 Après une ouverture de communication, le n° de séquence est 3 et autorise jusqu’à la séquence 5 :
 
 ![image](https://user-images.githubusercontent.com/83721477/165297560-362962ab-ec06-459b-806a-96544008af9e.png)
-IMPORTANT : la taille de cette fenêtre glissante n’est pas fixe. Ainsi, le serveur peut inclure (toujours dans le champ "fenêtre", la taille de la fenêtre qui lui semble la plus adaptée. De la sorte, en cas d’accusé de réception indiquant une demande d’augmentation de la taille de la fenêtre, le client peut déplacer celle-ci vers la droite. Mais, en cas de réduction, le client attend que la fenêtre se déplace d’elle-même.
+
+La taille de `sliding window` n’est pas fixe.
+Ainsi, le serveur peut inclure (toujours dans le champ `window size`, la taille de la fenêtre qui lui semble la plus adaptée. De la sorte, en cas d’accusé de réception indiquant une demande d’augmentation de la taille de la fenêtre, le client peut déplacer celle-ci vers la droite.
+Mais, en cas de réduction, le client attend que la fenêtre se déplace d’elle-même.
 
 En ce qui concerne la fin d’une connexion, le protocole prévoit que le client demande lui-même à mettre fin à la transmission, au même titre que le serveur. La terminaison s’effectue alors de la façon suivante :
 
