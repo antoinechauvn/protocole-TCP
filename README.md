@@ -24,7 +24,12 @@ Après quoi, grâce à une minuterie déclenchée dès la réception d’un segm
 #### Exemple:
 ![image](https://user-images.githubusercontent.com/83721477/165297403-65212acd-5262-4c7c-a06c-49b9b35caacf.png)
 
-*Note: si le segment n’était pas perdu et qu’il arrive malgré tout à destination, le récepteur saura, grâce au numéro d’ordre qu’il s’agit d’un doublon et ne conservera alors que le dernier segment arrivé à destination.*
+*Note: si le segment n’était pas perdu et qu’il arrive malgré tout à destination, le récepteur saura, grâce au numéro d’ordre qu’il s’agit d’un doublon et ne conservera alors que le dernier segment arrivé à destination.
+
+## Transfert de données
+
+Pendant la phase de transferts de données, certains mécanismes clefs permettent d'assurer la robustesse et la fiabilité de TCP. En particulier, les numéros de séquence sont utilisés afin d'ordonner les segments TCP reçus et de détecter les données perdues, les sommes de contrôle permettent la détection d'erreurs.
+<hr>
 
 ```
 Etant donné que le processus de communication se fait via une émission de données et d’un accusé de réception,
@@ -32,13 +37,6 @@ basé sur ce fameux numéro de séquence, il est nécessaire que les machines é
 (c’est-à-dire, respectivement le client et le serveur), connaissent le numéro d’ordre initial de
 la transmission effectuée par l’autre machine.
 ```
-
-Il est donc convenu que l’établissement d’une connexion entre deux applications s’effectue de la manière suivante :
-
-* Les ports de service doivent être ouverts.
-* L’application du serveur est à l’écoute (en mode passif), en attente d’une connexion entrante.
-* L’application sur le client émet une requête de connexion vers le serveur.
-* L’application du client est alors dite en ouverture active.
 
 #### Donc, les deux machines en communication doivent synchroniser leurs séquences.<br>Cela se fait par le mécanisme appelé `Three Way Handshake` (traduit en poignée de main à trois temps).
 
@@ -54,6 +52,8 @@ Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 Une fois le three-way handshake effectué, le client et le serveur ont reçu un acquittement de la connexion.<br>Les étapes 1 et 2 définissent le numéro de séquence pour la communication du client au serveur et les étapes 2 et 3 définissent le numéro de séquence pour la communication dans l'autre sens.<br>Une communication full-duplex est maintenant établie entre le client et le serveur.
 
 ![image](https://user-images.githubusercontent.com/83721477/165297474-a9749eaf-cb3a-4f1d-a791-8d0166019c9b.png)
+
+
 
 ### Limites
 ```
