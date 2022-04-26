@@ -13,23 +13,27 @@ Le protocole TCP a pour tâche de :
 - Formater les données en segments de longueur variable pour les remettre au protocole IP.
 - Initialiser et terminer une communication.
 
+## Structure d'un segment TCP
+![image](https://user-images.githubusercontent.com/83721477/165390864-68c9fffa-d70d-4cce-96b6-de87e96ba0db.png)
+![image](https://user-images.githubusercontent.com/83721477/165391150-f7edd59b-640b-474d-86ce-f162fc0c3e5f.png)
+
+
 ## Principe de fonctionnement
+### Transfert de données
+Pendant la phase de transferts de données, certains mécanismes clefs permettent d'assurer la robustesse et la fiabilité de TCP. En particulier, les numéros de séquence sont utilisés afin d'ordonner les segments TCP reçus et de détecter les données perdues, les sommes de contrôle permettent la détection d'erreurs.
+
 * Lors de l’émission d’un segment, un numéro de séquence lui est associé.
-* De même, à réception d’un segment de données, la machine réceptrice retourne un segment d’information dont le flag est positionné à 1. Cela signifie qu’il s’agit d’un accusé de réception.
-* Ce flag est accompagné d’un numéro d’accusé de réception (ACK) prenant alors la valeur du numéro d’ordre précédent :
+* De même, à réception d’un segment de données, la machine réceptrice retourne un segment d’information dont le flag est positionné à 1. <br>Cela signifie qu’il s’agit d’un accusé de réception.
+* Ce flag est accompagné d’un numéro d’accusé de réception (ACK) prenant alors la valeur du numéro de séquence précédent :
 
 ![image](https://user-images.githubusercontent.com/83721477/165297381-c677ef86-a9d7-49bf-aaca-b5f3901c026b.png)
 
 Après quoi, grâce à une minuterie déclenchée dès la réception d’un segment, au niveau de l’émetteur, le segment est réexpédié dès lors que le délai imparti est écoulé.<br> En effet, dans ce cas, le protocole considère que le segment est perdu
+
 #### Exemple:
 ![image](https://user-images.githubusercontent.com/83721477/165297403-65212acd-5262-4c7c-a06c-49b9b35caacf.png)
 
-*Note: si le segment n’était pas perdu et qu’il arrive malgré tout à destination, le récepteur saura, grâce au numéro d’ordre qu’il s’agit d’un doublon et ne conservera alors que le dernier segment arrivé à destination.
-
-## Transfert de données
-
-Pendant la phase de transferts de données, certains mécanismes clefs permettent d'assurer la robustesse et la fiabilité de TCP. En particulier, les numéros de séquence sont utilisés afin d'ordonner les segments TCP reçus et de détecter les données perdues, les sommes de contrôle permettent la détection d'erreurs.
-<hr>
+*Note: si le segment n’était pas perdu et qu’il arrive malgré tout à destination, le récepteur saura, grâce au numéro d’ordre qu’il s’agit d’un doublon et ne conservera alors que le dernier segment arrivé à destination.*
 
 ```
 Etant donné que le processus de communication se fait via une émission de données et d’un accusé de réception,
@@ -37,24 +41,31 @@ basé sur ce fameux numéro de séquence, il est nécessaire que les machines é
 (c’est-à-dire, respectivement le client et le serveur), connaissent le numéro d’ordre initial de
 la transmission effectuée par l’autre machine.
 ```
+#### Donc, les deux machines en communication doivent synchroniser leurs séquences.<br>Cela se fait par le mécanisme appelé `Three Way Handshake` (traduit en poignée de main à trois temps).<br><br><br>
 
-#### Donc, les deux machines en communication doivent synchroniser leurs séquences.<br>Cela se fait par le mécanisme appelé `Three Way Handshake` (traduit en poignée de main à trois temps).
 
-*Note: Le Three Way Handshake est également utilisé lors de la clôture de session.*
-
-## Three Way Handshake
+### Établissement d'une connexion (Three Way Handshake)
 Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 
 1. `SYN`: Le client qui désire établir une connexion avec un serveur va envoyer un premier paquet SYN (synchronized) au serveur. Le numéro de séquence de ce paquet est un nombre aléatoire X.<br>
 2. `SYN-ACK`: Le serveur va répondre au client à l'aide d'un paquet SYN-ACK (synchronize, acknowledge).<br>Le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN) incrémenté de un (X + 1) tandis que le numéro de séquence du paquet SYN-ACK est un nombre aléatoire Y.<br>
 3. `ACK`: Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception.<br>Le numéro d'acquittement de ce paquet est défini selon le numéro de séquence reçu précédemment (par exemple : X + 1) et le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN-ACK) incrémenté de un (Y + 1).
 
-Une fois le three-way handshake effectué, le client et le serveur ont reçu un acquittement de la connexion.<br>Les étapes 1 et 2 définissent le numéro de séquence pour la communication du client au serveur et les étapes 2 et 3 définissent le numéro de séquence pour la communication dans l'autre sens.<br><br>
+* Les numéros de séquence sont utilisés pour décompter les données dans le flux d'octets
+* Le numéro de séquence représente le propre numéro de séquence de l'émetteur TCP
+* Le numéro d'acquittement représente le numéro de séquence du destinataire.
+
+Afin d'assurer la fiabilité de TCP, le destinataire doit acquitter les segments reçus en indiquant qu'il a reçu toutes les données du flux d'octets jusqu'à un certain numéro de séquence.
+
+
 **Une communication `full-duplex` est maintenant établie entre le client et le serveur.**
 
 ![image](https://user-images.githubusercontent.com/83721477/165389106-fcebe854-aa1c-4330-b206-bd4797f677e8.png)
 
+### Terminaison d'une connexion
+La phase de terminaison d'une connexion utilise un handshaking en quatre temps, chaque extrémité de la connexion effectuant sa terminaison de manière indépendante. Ainsi, la fin d'une connexion nécessite une paire de segments FIN et ACK pour chaque extrémité.
 
+![image](https://user-images.githubusercontent.com/83721477/165391699-9a676927-cd18-4f30-9c8f-d690423f87ff.png)
 
 ### Limites
 ```
