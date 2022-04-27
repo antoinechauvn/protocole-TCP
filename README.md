@@ -19,31 +19,6 @@ Le protocole TCP a pour tâche de :
 
 
 ## Principe de fonctionnement
-### Transfert de données
-Pendant la phase de transferts de données, certains mécanismes clefs permettent d'assurer la robustesse et la fiabilité de TCP. En particulier, les numéros de séquence sont utilisés afin d'ordonner les segments TCP reçus et de détecter les données perdues, les sommes de contrôle permettent la détection d'erreurs.
-
-* Lors de l’émission d’un segment, un numéro de séquence lui est associé.
-* De même, à réception d’un segment de données, la machine réceptrice retourne un segment d’information dont le flag est positionné à 1. <br>Cela signifie qu’il s’agit d’un accusé de réception.
-* Ce flag est accompagné d’un numéro d’accusé de réception (ACK) prenant alors la valeur du numéro de séquence précédent :
-
-![image](https://user-images.githubusercontent.com/83721477/165297381-c677ef86-a9d7-49bf-aaca-b5f3901c026b.png)
-
-Après quoi, grâce à une minuterie déclenchée dès la réception d’un segment, au niveau de l’émetteur, le segment est réexpédié dès lors que le délai imparti est écoulé.<br> En effet, dans ce cas, le protocole considère que le segment est perdu
-
-#### Exemple:
-![image](https://user-images.githubusercontent.com/83721477/165297403-65212acd-5262-4c7c-a06c-49b9b35caacf.png)
-
-*Note: si le segment n’était pas perdu et qu’il arrive malgré tout à destination, le récepteur saura, grâce au numéro d’ordre qu’il s’agit d’un doublon et ne conservera alors que le dernier segment arrivé à destination.*
-
-```
-Etant donné que le processus de communication se fait via une émission de données et d’un accusé de réception,
-basé sur ce fameux numéro de séquence, il est nécessaire que les machines émettrice et réceptrice
-(c’est-à-dire, respectivement le client et le serveur), connaissent le numéro d’ordre initial de
-la transmission effectuée par l’autre machine.
-```
-#### Donc, les deux machines en communication doivent synchroniser leurs séquences.<br>Cela se fait par le mécanisme appelé `Three Way Handshake` (traduit en poignée de main à trois temps).<br><br><br>
-
-
 ### Établissement d'une connexion (Three Way Handshake)
 Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 
@@ -67,34 +42,15 @@ La phase de terminaison d'une connexion utilise un handshaking en quatre temps, 
 
 ![image](https://user-images.githubusercontent.com/83721477/165391699-9a676927-cd18-4f30-9c8f-d690423f87ff.png)
 
-### Limites
-```
-À la suite de ce premier échange, entre deux machines, comportant trois séquences, les deux protagonistes
-sont alors synchronisés et la communication effective peut commencer. Des petits malins ont alors trouvé un
-moyen de détourner ce mécanisme et en ont fait un outil de piratage appelé IP Spoofing. En fait, cela permet
-de corrompre la relation d’approbation établie, à des fins malicieuses.
-```
+## Transfert de données
 
-### Solution
-Afin d’empêcher ce détournement, on peut limiter le nombre d’accusés de réception pour désengorger le trafic réseau, en fixant le nombre de séquence, au bout duquel un accusé de réception est nécessaire.<br>
+![image](https://user-images.githubusercontent.com/83721477/165497974-9a060346-4721-463d-ac24-e310da00e8a2.png)
+![image](https://user-images.githubusercontent.com/83721477/165498530-09937297-258d-4877-adea-9bb2e52be077.png)
 
-Cette valeur est stockée dans le champ `window size` de l’entête TCP/IP.
+### Contrôle de flux
+![image](https://user-images.githubusercontent.com/83721477/165499247-06fe22b4-29b2-489d-9fcd-912c30209e9d.png)
+![image](https://user-images.githubusercontent.com/83721477/165499360-8b1d3580-5737-4d0e-8230-989a49d322cc.png)
 
-Ce système, appelé `sliding window method`, définit une fourchette de séquences n’ayant nul besoin d’un accusé de réception et se déplace au fur et à mesure que les accusés de réception sont détectés.
-
-### Fenêtre Fixe
-
-![image](https://user-images.githubusercontent.com/83721477/165487070-fffb2eeb-6e46-4557-b028-849ab19175a8.png)
-![image](https://user-images.githubusercontent.com/83721477/165487285-c2683f82-3387-484c-8274-e50ae77f27e1.png)
-
-### Fenêtre Dynamique
-![image](https://user-images.githubusercontent.com/83721477/165487481-c5909b52-eb22-4e53-a131-0d2df2c60e65.png)
-![image](https://user-images.githubusercontent.com/83721477/165487632-5d17aeeb-fd4b-4ba0-90a6-777b42b0407f.png)
-![image](https://user-images.githubusercontent.com/83721477/165487806-479c32a8-ac30-400f-8981-7292f54a0b28.png)
-![image](https://user-images.githubusercontent.com/83721477/165488151-38fee7f9-f64f-49e3-89a1-9f698ce9f754.png)
-![image](https://user-images.githubusercontent.com/83721477/165488354-01ff1e46-2c22-4a5a-8bd5-600eee9ff714.png)
-
-Ainsi, l’association des deux protocoles TCP et IP permettent d’acheminer les messages de bout-en-bout.
 
 *Note: Lorsque l’on souhaite privilégier la rapidité par rapport à la sécurité de transmission, il est possible d’utiliser le protocole UDP, orienté sans connexion, plutôt que TCP.*
 
