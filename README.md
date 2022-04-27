@@ -83,13 +83,12 @@ Cette valeur est stockée dans le champ `window size` de l’entête TCP/IP.
 Ce système, appelé `sliding window method`, définit une fourchette de séquences n’ayant nul besoin d’un accusé de réception et se déplace au fur et à mesure que les accusés de réception sont détectés.
 
 #### Exemple: 
-Après une ouverture de communication, le n° de séquence est 3 et autorise jusqu’à la séquence 5 :
 
-![image](https://user-images.githubusercontent.com/83721477/165297560-362962ab-ec06-459b-806a-96544008af9e.png)
 
 La taille de `sliding window` n’est pas fixe.
-Ainsi, le serveur peut inclure (toujours dans le champ `window size`, la taille de la fenêtre qui lui semble la plus adaptée. De la sorte, en cas d’accusé de réception indiquant une demande d’augmentation de la taille de la fenêtre, le client peut déplacer celle-ci vers la droite.
-Mais, en cas de réduction, le client attend que la fenêtre se déplace d’elle-même.
+![image](https://user-images.githubusercontent.com/83721477/165465318-8d8bdda1-7a58-4592-8496-c22ddeb6af7a.png)
+
+
 
 Ainsi, l’association des deux protocoles TCP et IP permettent d’acheminer les messages de bout-en-bout.
 
