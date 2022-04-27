@@ -2,9 +2,9 @@
 
 ### Qu'est-ce que le protocole TCP?
 ```
-Le protocole TCP (Transmission Control Protocol) est un des principaux acteurs de la couche TRANSPORT du modèle TCP/IP.
-Il permet au niveau des applications, de gérer les données en provenance ou à destination de la couche inférieure
-(c’est-à-dire du protocole IP).
+Le protocole TCP (Transmission Control Protocol) est un des principaux acteurs de la couche TRANSPORT
+du modèle TCP/IP. Il permet au niveau des applications, de gérer les données en provenance ou à
+destination de la couche inférieure (c’est-à-dire du protocole IP).
 ```
 Le protocole TCP a pour tâche de :
 
