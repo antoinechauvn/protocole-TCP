@@ -29,7 +29,7 @@ Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 2. `SYN-ACK`: Le serveur va répondre au client à l'aide d'un paquet SYN-ACK.<br>Le numéro `ACK` est égal au numéro de séquence du paquet précédent `SEQ` incrémenté de un (X + 1) <br>Le numéro de séquence `SEQ` du paquet SYN-ACK est un nombre aléatoire Y (ici 0).<br>
 3. `ACK`: Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception.<br>Le numéro `SEQ` de ce paquet est défini selon le numéro `ACK` du packet reçu précédemment (ici 1).<br>Le numéro `ACK` est égal au numéro de séquence `SEQ` du paquet précédent (SYN-ACK) incrémenté de 1 (ici 1).
 
-<h2 align="center">Mémo</h2>
+<h2 align="center">Mémo </h2>
 
 ### `SEQ` = `ACK` du dernier packet
 
@@ -67,9 +67,22 @@ A la suite d'un établissement de connexion:
 
 
 ### Contrôle de flux
+WINDOW_SIZE = 2904 OCTETS
 ![image](https://user-images.githubusercontent.com/83721477/165499247-06fe22b4-29b2-489d-9fcd-912c30209e9d.png)
 ![image](https://user-images.githubusercontent.com/83721477/165499360-8b1d3580-5737-4d0e-8230-989a49d322cc.png)
 
+<h2 align="center">Mémo</h2>
+
+### `SEQ` = `ACK` du dernier packet
+
+### `ACK` = `SEQ` du dernier packet + nombre d'octets
+
+### DANS LE CADRE DE MULTIPLES SEGMENTS POUR UN SEGMENT DIFFERENT DU PREMIER
+### `SEQ` = `SEQ` du dernier packet + nombre d'octets
+
+### `ACK` = `ACK` du dernier packet
+
+<h2></h2>
 
 *Note: Lorsque l’on souhaite privilégier la rapidité par rapport à la sécurité de transmission, il est possible d’utiliser le protocole UDP, orienté sans connexion, plutôt que TCP.*
 
