@@ -85,7 +85,7 @@ WINDOW_SIZE = 2904 OCTETS
 <h2></h2>
 
 ## Notes
-µ Lorsque l’on souhaite privilégier la rapidité par rapport à la sécurité de transmission, il est possible d’utiliser le protocole UDP, orienté sans connexion, plutôt que TCP.
+* Lorsque l’on souhaite privilégier la rapidité par rapport à la sécurité de transmission, il est possible d’utiliser le protocole UDP, orienté sans connexion, plutôt que TCP.
 * TCP est fiable. En effet, le protocole garantit la transmission de toutes les données dans leur intégralité, ainsi que la possibilité, pour le destinataire, de les remettre dans le bon ordre.
 * TCP permet de multiplexer les données, c'est-à-dire de faire circuler simultanément des informations provenant de sources (applications par exemple) distinctes sur une même ligne
 * TCP permet de formater les données en segments de longueur variable afin de les "remettre" au protocole IP
