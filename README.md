@@ -43,7 +43,7 @@ La phase de terminaison d'une connexion utilise un handshaking en quatre temps, 
 ![image](https://user-images.githubusercontent.com/83721477/165391699-9a676927-cd18-4f30-9c8f-d690423f87ff.png)
 
 ## Transfert de données
-
+![image](https://user-images.githubusercontent.com/83721477/165500623-d307fc4d-5ea0-4ad3-94b7-17666096c81f.png)
 ![image](https://user-images.githubusercontent.com/83721477/165497974-9a060346-4721-463d-ac24-e310da00e8a2.png)
 ![image](https://user-images.githubusercontent.com/83721477/165498530-09937297-258d-4877-adea-9bb2e52be077.png)
 
