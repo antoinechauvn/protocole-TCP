@@ -46,7 +46,10 @@ La phase de terminaison d'une connexion utilise un handshaking en quatre temps, 
 ## Transfert de données
 A la suite d'un établissement de connexion:
 ![image](https://user-images.githubusercontent.com/83721477/165497974-9a060346-4721-463d-ac24-e310da00e8a2.png)
+![image](https://user-images.githubusercontent.com/83721477/165548702-200701b6-94fd-4883-950c-bf50bde1c2ea.png)
 ![image](https://user-images.githubusercontent.com/83721477/165498530-09937297-258d-4877-adea-9bb2e52be077.png)
+![image](https://user-images.githubusercontent.com/83721477/165549108-20a59b1f-9bae-47d6-869c-35977c97118a.png)
+
 1. On envoie 376 octets de données au serveur en gardant le numéro `SEQ` et `ACK` définis lors du 3 Way Handshake (Car on a rien envoyé ou reçu en données)
 2. Lorsque l'une partie reçoit un segment, il ajoute au numéro de séquence `SEQ` (du packet) le nombre d'octets reçus et obtient ainsi le numéro du prochain octet attendu, c'est à dire le numéro d'acquittement `ACK`.
 3. On envoie 270 octets de données au client<br>
