@@ -20,11 +20,13 @@ Le protocole TCP a pour tâche de :
 
 ## Principe de fonctionnement
 ### Établissement d'une connexion (Three Way Handshake)
+![image](https://user-images.githubusercontent.com/83721477/165517030-b4578368-1a65-4aa1-b39e-0e68a706199d.png)
+
 Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 
-1. `SYN`: Le client qui désire établir une connexion avec un serveur va envoyer un premier paquet SYN (synchronized) au serveur. Le numéro de séquence de ce paquet est un nombre aléatoire X.<br>
-2. `SYN-ACK`: Le serveur va répondre au client à l'aide d'un paquet SYN-ACK (synchronize, acknowledge).<br>Le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN) incrémenté de un (X + 1) tandis que le numéro de séquence du paquet SYN-ACK est un nombre aléatoire Y.<br>
-3. `ACK`: Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception.<br>Le numéro d'acquittement de ce paquet est défini selon le numéro de séquence reçu précédemment (par exemple : X + 1) et le numéro du ACK est égal au numéro de séquence du paquet précédent (SYN-ACK) incrémenté de un (Y + 1).
+1. `SYN`: Le client qui désire établir une connexion avec un serveur va envoyer un premier paquet SYN au serveur. <br>Le numéro de séquence `SEQ` de ce paquet est un nombre aléatoire X (ici 0).<br>
+2. `SYN-ACK`: Le serveur va répondre au client à l'aide d'un paquet SYN-ACK.<br>Le numéro `ACK` est égal au numéro de séquence du paquet précédent `SEQ` incrémenté de un (X + 1) <br>Le numéro de séquence `SEQ` du paquet SYN-ACK est un nombre aléatoire Y (ici 0).<br>
+3. `ACK`: Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception.<br>Le numéro `SEQ` de ce paquet est défini selon le numéro `ACK` du packet reçu précédemment (ici 1).<br>Le numéro `ACK` est égal au numéro de séquence `SEQ` du paquet précédent (SYN-ACK) incrémenté de 1 (ici 1).
 
 * Les numéros de séquence sont utilisés pour décompter les données dans le flux d'octets
 * Le numéro de séquence représente le propre numéro de séquence de l'émetteur TCP
@@ -34,8 +36,6 @@ Afin d'assurer la fiabilité de TCP, le destinataire doit acquitter les segments
 
 
 **Une communication `full-duplex` est maintenant établie entre le client et le serveur.**
-
-![image](https://user-images.githubusercontent.com/83721477/165389106-fcebe854-aa1c-4330-b206-bd4797f677e8.png)
 
 ### Terminaison d'une connexion
 La phase de terminaison d'une connexion utilise un handshaking en quatre temps, chaque extrémité de la connexion effectuant sa terminaison de manière indépendante. Ainsi, la fin d'une connexion nécessite une paire de segments FIN et ACK pour chaque extrémité.
