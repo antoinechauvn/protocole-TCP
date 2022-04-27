@@ -82,13 +82,17 @@ Cette valeur est stockée dans le champ `window size` de l’entête TCP/IP.
 
 Ce système, appelé `sliding window method`, définit une fourchette de séquences n’ayant nul besoin d’un accusé de réception et se déplace au fur et à mesure que les accusés de réception sont détectés.
 
-#### Exemple: 
+### Fenêtre Fixe
 
+![image](https://user-images.githubusercontent.com/83721477/165487070-fffb2eeb-6e46-4557-b028-849ab19175a8.png)
+![image](https://user-images.githubusercontent.com/83721477/165487285-c2683f82-3387-484c-8274-e50ae77f27e1.png)
 
-La taille de `sliding window` n’est pas fixe.
-![image](https://user-images.githubusercontent.com/83721477/165465318-8d8bdda1-7a58-4592-8496-c22ddeb6af7a.png)
-
-
+### Fenêtre Dynamique
+![image](https://user-images.githubusercontent.com/83721477/165487481-c5909b52-eb22-4e53-a131-0d2df2c60e65.png)
+![image](https://user-images.githubusercontent.com/83721477/165487632-5d17aeeb-fd4b-4ba0-90a6-777b42b0407f.png)
+![image](https://user-images.githubusercontent.com/83721477/165487806-479c32a8-ac30-400f-8981-7292f54a0b28.png)
+![image](https://user-images.githubusercontent.com/83721477/165488151-38fee7f9-f64f-49e3-89a1-9f698ce9f754.png)
+![image](https://user-images.githubusercontent.com/83721477/165488354-01ff1e46-2c22-4a5a-8bd5-600eee9ff714.png)
 
 Ainsi, l’association des deux protocoles TCP et IP permettent d’acheminer les messages de bout-en-bout.
 
