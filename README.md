@@ -20,8 +20,8 @@ Le protocole TCP a pour tâche de :
 
 ## Principe de fonctionnement
 ### Établissement d'une connexion (Three Way Handshake)
-![image](https://user-images.githubusercontent.com/83721477/165517030-b4578368-1a65-4aa1-b39e-0e68a706199d.png)
-![image](https://user-images.githubusercontent.com/83721477/165547927-d3fe1001-3990-4a3d-8d87-b68de47fd4ec.png)
+
+![image](https://user-images.githubusercontent.com/83721477/165554871-a3192506-a448-4d1a-8317-1070bbd4fd95.png)
 
 Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 
@@ -29,12 +29,16 @@ Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 2. `SYN-ACK`: Le serveur va répondre au client à l'aide d'un paquet SYN-ACK.<br>Le numéro `ACK` est égal au numéro de séquence du paquet précédent `SEQ` incrémenté de un (X + 1) <br>Le numéro de séquence `SEQ` du paquet SYN-ACK est un nombre aléatoire Y (ici 0).<br>
 3. `ACK`: Pour terminer, le client va envoyer un paquet ACK au serveur qui va servir d'accusé de réception.<br>Le numéro `SEQ` de ce paquet est défini selon le numéro `ACK` du packet reçu précédemment (ici 1).<br>Le numéro `ACK` est égal au numéro de séquence `SEQ` du paquet précédent (SYN-ACK) incrémenté de 1 (ici 1).
 
-* Les numéros de séquence sont utilisés pour décompter les données dans le flux d'octets
-* Le numéro de séquence représente le propre numéro de séquence de l'émetteur TCP
-* Le numéro d'acquittement représente le numéro de séquence du destinataire.
+<h2 align="center">Mémo</h2>
+
+### `SEQ` = `ACK` du dernier packet
+
+### `ACK` = `SEQ` du dernier packet + nombre d'octets
+
+*Note: Le phantom byte compte comme un octet de data*
+<h2></h2>
 
 Afin d'assurer la fiabilité de TCP, le destinataire doit acquitter les segments reçus en indiquant qu'il a reçu toutes les données du flux d'octets jusqu'à un certain numéro de séquence.
-
 
 **Une communication `full-duplex` est maintenant établie entre le client et le serveur.**
 
@@ -45,23 +49,22 @@ La phase de terminaison d'une connexion utilise un handshaking en quatre temps, 
 
 ## Transfert de données
 A la suite d'un établissement de connexion:
-![image](https://user-images.githubusercontent.com/83721477/165497974-9a060346-4721-463d-ac24-e310da00e8a2.png)
-![image](https://user-images.githubusercontent.com/83721477/165548702-200701b6-94fd-4883-950c-bf50bde1c2ea.png)
-![image](https://user-images.githubusercontent.com/83721477/165498530-09937297-258d-4877-adea-9bb2e52be077.png)
-![image](https://user-images.githubusercontent.com/83721477/165549108-20a59b1f-9bae-47d6-869c-35977c97118a.png)
 
-1. On envoie 376 octets de données au serveur en gardant le numéro `SEQ` et `ACK` définis lors du 3 Way Handshake (Car on a rien envoyé ou reçu en données)
-2. Lorsque l'une partie reçoit un segment, il ajoute au numéro de séquence `SEQ` (du packet) le nombre d'octets reçus et obtient ainsi le numéro du prochain octet attendu, c'est à dire le numéro d'acquittement `ACK`.
-3. On envoie 270 octets de données au client<br>
-4. Le client reçoit le segment, il ajoute le numéro de séquence `SEQ` (du packet) + le nombre d'octets reçu pour former l'`ACK` (ici 270 + 1)<br> Son numéro de séquence `SEQ` devient l'ACK
-5. 
-*Note: Le numéro de séquence `SEQ` représente le propre numéro de séquence de l'émetteur TCP* <br>
-*Note: Le numéro d'acquittement `ACK` représente le numéro de séquence du destinataire.*
+![image](https://user-images.githubusercontent.com/83721477/165555715-6c87b7e8-2852-486f-b789-2e5271805c2a.png)
+
+<h2 align="center">Mémo</h2>
+
+### `SEQ` = `ACK` du dernier packet
+
+### `ACK` = `SEQ` du dernier packet + nombre d'octets
+
+<h2></h2>
 
 * Afin de garantir que les segments arrivent dans le bon ordre, les deux participants utilisent des numéros de séquence `SEQ` et des numéros d'acquittement `ACK`.
-* Le numéro de séquence `SEQ` contient le numéro du dernier segment envoyé et le numéro d'acquittement `ACK` contient le numéro du prochain segment attendu.
-* Les numéros sont calculés à partir de la taille des segments, en nombre d'octets.
-* .
+
+![image](https://user-images.githubusercontent.com/83721477/165556670-aab79640-36ae-478b-839a-9b9391bfbd5c.png)
+
+
 
 ### Contrôle de flux
 ![image](https://user-images.githubusercontent.com/83721477/165499247-06fe22b4-29b2-489d-9fcd-912c30209e9d.png)
