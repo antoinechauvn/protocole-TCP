@@ -21,6 +21,7 @@ Le protocole TCP a pour tâche de :
 ## Principe de fonctionnement
 ### Établissement d'une connexion (Three Way Handshake)
 ![image](https://user-images.githubusercontent.com/83721477/165517030-b4578368-1a65-4aa1-b39e-0e68a706199d.png)
+![image](https://user-images.githubusercontent.com/83721477/165547927-d3fe1001-3990-4a3d-8d87-b68de47fd4ec.png)
 
 Comme son nom l'indique, le three-way handshake se déroule en trois étapes :
 
@@ -43,9 +44,21 @@ La phase de terminaison d'une connexion utilise un handshaking en quatre temps, 
 ![image](https://user-images.githubusercontent.com/83721477/165391699-9a676927-cd18-4f30-9c8f-d690423f87ff.png)
 
 ## Transfert de données
-![image](https://user-images.githubusercontent.com/83721477/165500623-d307fc4d-5ea0-4ad3-94b7-17666096c81f.png)
+A la suite d'un établissement de connexion:
 ![image](https://user-images.githubusercontent.com/83721477/165497974-9a060346-4721-463d-ac24-e310da00e8a2.png)
 ![image](https://user-images.githubusercontent.com/83721477/165498530-09937297-258d-4877-adea-9bb2e52be077.png)
+1. On envoie 376 octets de données au serveur en gardant le numéro `SEQ` et `ACK` définis lors du 3 Way Handshake (Car on a rien envoyé ou reçu en données)
+2. Lorsque l'une partie reçoit un segment, il ajoute au numéro de séquence `SEQ` (du packet) le nombre d'octets reçus et obtient ainsi le numéro du prochain octet attendu, c'est à dire le numéro d'acquittement `ACK`.
+3. On envoie 270 octets de données au client<br>
+4. Le client reçoit le segment, il ajoute le numéro de séquence `SEQ` (du packet) + le nombre d'octets reçu pour former l'`ACK` (ici 270 + 1)<br> Son numéro de séquence `SEQ` devient l'ACK
+5. 
+*Note: Le numéro de séquence `SEQ` représente le propre numéro de séquence de l'émetteur TCP* <br>
+*Note: Le numéro d'acquittement `ACK` représente le numéro de séquence du destinataire.*
+
+* Afin de garantir que les segments arrivent dans le bon ordre, les deux participants utilisent des numéros de séquence `SEQ` et des numéros d'acquittement `ACK`.
+* Le numéro de séquence `SEQ` contient le numéro du dernier segment envoyé et le numéro d'acquittement `ACK` contient le numéro du prochain segment attendu.
+* Les numéros sont calculés à partir de la taille des segments, en nombre d'octets.
+* .
 
 ### Contrôle de flux
 ![image](https://user-images.githubusercontent.com/83721477/165499247-06fe22b4-29b2-489d-9fcd-912c30209e9d.png)
