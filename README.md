@@ -68,6 +68,7 @@ A la suite d'un établissement de connexion:
 
 ### Contrôle de flux
 WINDOW_SIZE = 2904 OCTETS
+Chaque appareil envoie à l'autre une taille de fenêtre suggérée qui indique la quantité de données qu'il souhaite recevoir avant d'obtenir un accusé de réception. Vous pouvez même avoir des tailles de fenêtre différentes pour les deux sens de circulation dans la même conversation.
 ![image](https://user-images.githubusercontent.com/83721477/165499247-06fe22b4-29b2-489d-9fcd-912c30209e9d.png)
 ![image](https://user-images.githubusercontent.com/83721477/165499360-8b1d3580-5737-4d0e-8230-989a49d322cc.png)
 
