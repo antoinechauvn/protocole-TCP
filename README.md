@@ -50,7 +50,8 @@ La phase de terminaison d'une connexion utilise un handshaking en quatre temps, 
 ## Transfert de données
 A la suite d'un établissement de connexion:
 
-![image](https://user-images.githubusercontent.com/83721477/165555715-6c87b7e8-2852-486f-b789-2e5271805c2a.png)
+![image](https://user-images.githubusercontent.com/83721477/165785804-16555174-e331-49f4-bfb8-3cf934f4fc41.png)
+
 
 Dans le packet ACK, il pourra déterminer grâce au premier packet (SEQ + DATA) qu'il a envoyer quel sera le prochain numéro de séquence (ici 377).<br>
 Donc si le packet qu'il reçoit contient un `ACK` inférieur alors il determinera qu'il y a une erreur.
